@@ -80,7 +80,7 @@ spec:
               - |
                 #!/bin/bash
                 set -e
-                mv '/usr/lib/plexmediaserver/Plex Transcoder' '/usr/lib/plexmediaserver/Plex Transcoder.orig' 
+                mv '/usr/lib/plexmediaserver/Plex Transcoder' '/usr/lib/plexmediaserver/Plex Transcoder.orig'
                 cp /shared/kube-plex '/usr/lib/plexmediaserver/Plex Transcoder'
 {{- end }}
 {{- range $probeName, $probe := .Values.probes }}
@@ -112,6 +112,10 @@ spec:
         # TODO: move this to a secret?
         - name: PLEX_CLAIM
           value: "{{ .Values.claimToken }}"
+{{- if .Values.service.loadBalancerIP }}
+        - name: ADVERTISE_IP
+          value: "http://{{ .Values.service.loadBalancerIP }}:32400"
+{{- end }}
         # kube-plex env vars
         - name: POD_NAME
           valueFrom:
