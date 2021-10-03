@@ -4,9 +4,9 @@
 
 # Default image configuration for ease of deployment
 image:
-  repository: plexinc/pms-docker
-  tag: latest
-  pullPolicy: Always
+  repository: linuxserver/plex
+  tag: version-1.24.3.5033-757abe6b4
+  pullPolicy: IfNotPresent
 
 # More recommended image configuration is to use a specific tag to make upgrades
 # predictable. For example:
@@ -19,7 +19,7 @@ kubePlex:
   enabled: true
   loglevel: ""
   image:
-    repository: ghcr.io/ressu/kube-plex
+    repository: ghcr.io/bloveless/kube-plex
     tag: latest
     pullPolicy: Always
   resources: {}
@@ -130,8 +130,7 @@ rbac:
   # account for this deployment
   ## serviceAccountName: ""
 
-nodeSelector:
-  beta.kubernetes.io/arch: amd64
+nodeSelector: {}
 
 persistence:
   transcode:
@@ -166,7 +165,7 @@ persistence:
     accessMode: ReadWriteMany
   extraData: []
     # Optionally specifify additional Data mounts.  These will be mounted as
-    # /data-${name}.  This should be in the same format as the above 'data', 
+    # /data-${name}.  This should be in the same format as the above 'data',
     # with the additional field 'name'
     # - claimName: "special-tv"
     #   name: 'foo'
@@ -203,7 +202,7 @@ podAnnotations: {}
 
 deploymentAnnotations: {}
 
-proxy: 
+proxy:
   # This allows to set a proxy environment variable, which PMS uses to fetch the token and assets like movie cover
   enable: false
   # http: "http://proxy:8080"

@@ -14,15 +14,19 @@ metadata:
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
+  ingressClassName: nginx
   rules:
     {{- range $host := .Values.ingress.hosts }}
     - host: {{ $host }}
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: pms
+              service:
+                name: {{ $serviceName }}
+                port:
+                  name: pms
     {{- end -}}
   {{- if .Values.ingress.tls }}
   tls:
